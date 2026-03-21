@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(code --list-extensions 2>&1 | head -20)",
+      "Bash(code --install-extension xyz.plsql-language 2>&1)",
+      "Bash(code --install-extension dbaeumer.vscode-eslint 2>&1)",
+      "Bash(code --install-extension esbenp.prettier-vscode 2>&1)",
+      "Bash(code --install-extension christian-kohler.path-intellisense 2>&1)",
+      "Bash(code --install-extension ritwickdey.LiveServer 2>&1)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "oracle-apex"
+  ]
+}
