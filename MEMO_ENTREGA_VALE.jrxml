@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MEMO_PEDIDO_VALE" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="548ced0c-04c8-41e8-930a-1bbf28dc90ba">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Desarrollo"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="ireport.jasperserver.url" value="http://192.168.41.160/jasperserver/"/>
+	<property name="ireport.jasperserver.user" value="caballerof"/>
+	<property name="ireport.jasperserver.reportUnit" value="/Reportes/MEMO_ENTREGA_VALE"/>
+	<property name="ireport.jasperserver.report.resource" value="/Reportes/MEMO_ENTREGA_VALE_files/main_jrxml"/>
+	<parameter name="P_ID_DET_PEDIDO" class="java.lang.Integer"/>
+	<parameter name="P_USUARIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT c.id_pedido_vale
+      ,c.fecha_pedido
+      ,cc.precio_unitario
+      ,d.cantidad_vales
+      ,d.fecha_desde
+      ,d.fecha_hasta
+      ,d.dias_semana
+      ,d.observacion
+      ,p.id_persona||'-'||p.nombres||' '||p.apellidos colaborador
+      , (
+        SELECT listagg(di.descripcion,',') WITHIN GROUP( ORDER BY nro_dia)
+        FROM dias_vale di
+        WHERE EXISTS (
+          SELECT 1
+          FROM TABLE(apex_string.split_numbers(p_str => d.dias_semana , p_sep =>':' ))t
+          WHERE t.column_value = di.nro_dia
+        )
+      ) AS dias_vale
+      ,(cc.precio_unitario * d.cantidad_vales) as monto_vales
+FROM  cab_pedido_vale c
+     ,cab_compra_vale cc
+     ,det_pedido_vale d
+     ,persona p
+WHERE d.id_det_pedido_vale =  $P{P_ID_DET_PEDIDO}  
+AND cc.ped_id_pedido_vale = c.id_pedido_vale
+AND d.ped_id_pedido_vale = c.id_pedido_vale
+AND p.id_persona = d.per_id_persona]]>
+	</queryString>
+	<field name="ID_PEDIDO_VALE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_PEDIDO_VALE"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PEDIDO_VALE"/>
+	</field>
+	<field name="FECHA_PEDIDO" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_PEDIDO"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_PEDIDO"/>
+	</field>
+	<field name="PRECIO_UNITARIO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PRECIO_UNITARIO"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRECIO_UNITARIO"/>
+	</field>
+	<field name="CANTIDAD_VALES" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="CANTIDAD_VALES"/>
+		<property name="com.jaspersoft.studio.field.label" value="CANTIDAD_VALES"/>
+	</field>
+	<field name="FECHA_DESDE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_DESDE"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_DESDE"/>
+	</field>
+	<field name="FECHA_HASTA" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_HASTA"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_HASTA"/>
+	</field>
+	<field name="DIAS_SEMANA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DIAS_SEMANA"/>
+		<property name="com.jaspersoft.studio.field.label" value="DIAS_SEMANA"/>
+	</field>
+	<field name="OBSERVACION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OBSERVACION"/>
+		<property name="com.jaspersoft.studio.field.label" value="OBSERVACION"/>
+	</field>
+	<field name="COLABORADOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="COLABORADOR"/>
+		<property name="com.jaspersoft.studio.field.label" value="COLABORADOR"/>
+	</field>
+	<field name="DIAS_VALE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DIAS_VALE"/>
+		<property name="com.jaspersoft.studio.field.label" value="DIAS_VALE"/>
+	</field>
+	<field name="MONTO_VALES" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MONTO_VALES"/>
+		<property name="com.jaspersoft.studio.field.label" value="MONTO_VALES"/>
+	</field>
+	<variable name="CANTIDAD_VALES1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{CANTIDAD_VALES}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="551" height="61" uuid="e5ac668d-321e-4f27-8845-eca42d1b4bf2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="227" y="10" width="100" height="20" uuid="028d5c06-f76b-488c-bbb7-1c79162d4d71"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEMORANDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="30" width="200" height="20" uuid="656e94a1-c596-45f8-b68a-d3d24bec055d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AREA GESTION DE PERSONAS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="499" y="1" width="50" height="13" uuid="fdea880e-0006-41a9-86c5-0d08b0dbb330"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_PEDIDO_VALE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="436" y="1" width="60" height="13" uuid="0d5dbb4d-d132-4710-9b08-0ff685b661ce">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id. pedido]]></text>
+			</staticText>
+			<textField pattern="dd-MM-yy hh:mm">
+				<reportElement x="449" y="14" width="100" height="13" uuid="a050ef49-bd39-4ed8-9cbc-ffc7b5395ec4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="27" width="100" height="13" uuid="a9111a2a-fc7e-4cad-82b4-a5cffa52b22a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_USUARIO}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="3" y="8" width="120" height="50" uuid="6757d840-bf43-4da2-abc3-ff5257c87b0f"/>
+				<imageExpression><![CDATA["repo:logo_2024.svg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="237" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="4" width="400" height="13" uuid="dfd69ffe-bb7f-4fd1-9756-a92466858d2c">
+					<property name="com.jaspersoft.studio.unit.y" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENTREGA DE VALES]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="114" y="22" width="100" height="13" uuid="07775d15-3735-4796-895f-39637bc89416"/>
+				<textFieldExpression><![CDATA[$F{FECHA_PEDIDO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="22" width="100" height="13" uuid="80b00b72-faaf-44dd-b45a-10cbb4c04178"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="37" width="100" height="13" uuid="09827ed3-2299-4a6e-8232-0a01ca5d9701"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[DE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="37" width="100" height="13" uuid="34410149-a794-4824-b719-128e639a16e4"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Dpto. G.D.P.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="53" width="100" height="13" uuid="f46e02e0-270e-423c-b5bc-cd6014405c23"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[PARA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="53" width="100" height="13" uuid="f0cf69fc-113c-4713-948f-00b2f17e3a3c"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Dpto. TESORERIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="69" width="100" height="13" uuid="a6bda1e3-4082-407d-a3d9-2592dd15726b"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[ASUNTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="69" width="430" height="31" uuid="25dc2339-968e-4d44-bda8-bc9c8685c765"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Entrega de vales de consumición en compensación de beneficio del almuerzo otorgado por la empresa.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="100" width="550" height="1" uuid="f991565b-9b83-45dd-8fd2-7e181d83989c"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="106" width="437" height="13" uuid="8727042c-980d-49c8-aa61-fb8e313e9109"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Por este medio se deja constancia de la entrega de:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="126" width="277" height="13" uuid="39f2abe6-6885-4cfc-a472-17627c55de9f"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cantidad de vales:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="297" y="126" width="60" height="13" uuid="a6d520b6-9e03-4e46-b9cd-769ad5f69cd4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CANTIDAD_VALES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,###,###">
+				<reportElement x="297" y="139" width="60" height="13" uuid="4bc431a0-fa25-4107-8e6a-9725bdb23033"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MONTO_VALES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="139" width="277" height="13" uuid="c59bf8d0-8401-4bcd-a2e4-fe31956e62de"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Monto de vales (Gs.):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="165" width="277" height="13" uuid="ac6f6027-d929-47d6-b537-085497298b73"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fecha desde/hasta:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="297" y="165" width="60" height="13" uuid="ed0e883a-eab3-49ed-8bd2-fbd3d322c51d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA_DESDE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="178" width="277" height="13" uuid="49ce387f-1d06-4cab-a7fd-b85d1a76f045"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dias de la semana:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="297" y="178" width="247" height="13" uuid="005a914d-cb96-482b-bd92-2e0cff10e8cb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIAS_VALE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="202" width="544" height="30" uuid="8816df8f-8e17-4a31-ba67-e5ac9e605bb2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nota importante: se deja constancia que los vales adelantados están sujetos a verificación de marcas."]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="377" y="165" width="60" height="13" uuid="847553b7-0fa2-42dc-89af-6f683daa34ae"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA_HASTA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="152" width="277" height="13" uuid="cae561ed-de70-4320-a852-108d903004e1"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Colaborador:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="297" y="152" width="247" height="13" uuid="cc94b971-d3c9-497f-ab69-e73805aea994"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="false" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COLABORADOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="357" y="165" width="20" height="13" uuid="d047bde2-91ad-410f-9332-27b5d7fe477b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["AL"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="220" height="16" uuid="52fb861f-0445-4aab-8aeb-d3199aec5c8c"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RECIBIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="26" width="110" height="24" uuid="69fa54d6-3f0e-4400-8f85-90955ec69991"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[FIRMA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="26" width="110" height="24" uuid="c6f59ce8-49d4-408f-8793-8eb5f62e4ad7"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="50" width="110" height="24" uuid="77caaeec-1e86-4310-b1ef-5be5382f8c49"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="50" width="110" height="24" uuid="edc51023-8c65-421b-a698-ef9feb8f9976"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[ACLARACION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="74" width="110" height="24" uuid="419dddff-194e-4567-8856-ea356d76900a"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="74" width="110" height="24" uuid="fdc3c79e-ed68-4c79-a09a-e529c4ac6499"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
