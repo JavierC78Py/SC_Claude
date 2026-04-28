@@ -1,0 +1,284 @@
+salus_local_desa=
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+     	 (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.24.106)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = anam)
+    )
+)
+apex23=
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+     	 (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.123)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = anam)
+    )
+)
+
+kmbr01_high = 
+		(description= 
+			(retry_count=20)
+			(retry_delay=3)
+			(address=
+				(protocol=tcps)
+				(port=1522)
+				(host=adb.sa-saopaulo-1.oraclecloud.com)
+			)
+			(connect_data=
+				(service_name=gefe98b802c8e1b_kmbr01_high.adb.oraclecloud.com)
+			)
+			(security=
+				(ssl_server_dn_match=yes)
+				(my_wallet_directory= C:\Users\caballerof\Desktop\PERSONAL\Wallet_KMBR01)
+			)
+		)
+
+
+dbkmelot_clone_high = 
+		(description= 
+			(retry_count=20)
+			(retry_delay=3)
+			(address=
+				(protocol=tcps)
+				(port=1522)
+				(host=adb.sa-santiago-1.oraclecloud.com)
+			)
+			(connect_data=(service_name=gc42a911feb841d_w7aqdhe7w3lgqyut_high.adb.oraclecloud.com))
+			(security=
+                    		(ssl_server_cert_dn="CN=adb.sa-santiago-1.oraclecloud.com, O=Oracle Corporation, L=Redwood City, ST=California, C=US")
+                    		(my_wallet_directory= C:\Users\caballerof\Desktop\Wallet_W7AQDHE7W3LGQYUT_clone)
+
+			)
+		)
+dbkmelot_high = 
+               (description= 
+                    (retry_count=20)
+                    (retry_delay=3)
+                    (address=
+                         (protocol=tcps)
+                         (port=1522)
+                         (host=adb.sa-santiago-1.oraclecloud.com)
+                    )
+                    (connect_data=
+                         (service_name=gc42a911feb841d_dbkmelot_high.adb.oraclecloud.com)
+                    )
+               (security=
+                    (ssl_server_cert_dn="CN=adb.sa-santiago-1.oraclecloud.com, O=Oracle Corporation, L=Redwood City, ST=California, C=US")
+                    (my_wallet_directory= C:\Users\caballerof\Desktop\PERSONAL\Wallet_DbKmelot)
+               )
+           )
+sanimedbd_high = (description= 
+        (retry_count=20)
+        (retry_delay=3)
+        (address=
+            (protocol=tcps)
+            (port=1522)
+            (host=adb.sa-saopaulo-1.oraclecloud.com)
+        )
+        (connect_data=
+          (service_name=g1c9428b64d62ab_sanimedbd_high.adb.oraclecloud.com)
+        )
+          (security=
+            (ssl_server_dn_match=yes)
+            (my_wallet_directory= C:\Users\caballerof\Desktop\CBC\Wallet_sanimedbd)
+        ))
+
+salotexprod=
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.45.22)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SID = prod)
+    )
+  )
+
+clinicadesa =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.45.14)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SID = anam)
+    )
+  )
+
+
+clinica =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.50)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SID = anam)
+    )
+  )
+
+cbc_local =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.5)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SID = cbc)
+    )
+  )
+
+prod =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.25)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SID = prod)
+    )
+  )
+
+repbi =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+                 (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.26)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = repbi)
+    )
+)
+
+britanico =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+                 (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.40.40)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = anam)
+    )
+)
+
+QASBRIT =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+                 (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.40.42)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = ANAM)
+    )
+)
+
+bi12 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.26)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+        (SERVICE_NAME = repbi)
+      )
+  )
+
+
+santa =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.23)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = anam)
+    )
+  )
+desarrollo =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.31)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = anam)
+    )
+  )
+
+XE =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = SCSAINFO010.santaclara.com.py)(PORT = 1522))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XEPDB1)
+    )
+  )
+
+XE_DESA =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.214)(PORT = 1521))
+    (CONNECT_DATA =
+        (SERVER = DEDICATED)
+        (SERVICE_NAME = XEPDB1)
+    )
+  )
+
+XE_TELEME_PROD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.204)(PORT = 1521))
+    (CONNECT_DATA =
+        (SERVER = DEDICATED)
+        (SERVICE_NAME = XEPDB1)
+    )
+  )
+
+XE_PROD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 131.161.255.44)(PORT = 1521))
+    (CONNECT_DATA =
+        (SERVER = DEDICATED)
+        (SERVICE_NAME = XEPDB1)
+    )
+  )
+
+
+XE_XE =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = SCSAINFO010.santaclara.com.py)(PORT = 1522))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XE)
+    )
+  )
+
+  
+prepaga =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.23)(PORT = 1521))
+    (CONNECT_DATA =
+      (SID = XE)
+    )
+  )
+
+
+dev =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+     	 (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.204)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = anam)
+    )
+)
+
+
+inv =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+     	 (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.41.235)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = prod)
+    )
+)
+
+
+
+Example2.world = 
+  (DESCRIPTION = 
+    (ADDRESS_LIST = 
+        (ADDRESS = 
+          (COMMUNITY = spx.world)
+          (PROTOCOL = SPX)
+          (Service = Server_lsnr)
+        )
+    )
+    (CONNECT_DATA = (SID = ORCL)
+    )
+  )
+
+Rep60_FEDE,Rep60_FEDE.world=(ADDRESS=(PROTOCOL=tcp)(HOST=FEDE)(PORT=1949))
+#Rep60_SCSAINF_04,Rep60_SCSAINF_04.world=(ADDRESS=(PROTOCOL=tcp)(HOST=SCSAINF_04)(PORT=1949))
