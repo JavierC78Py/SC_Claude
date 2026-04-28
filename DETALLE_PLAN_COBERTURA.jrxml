@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DETALLE_PLAN_COBERTURA" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1b2c3d4-e5f6-7890-abcd-ef1234567890">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProduccionSC"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="ireport.jasperserver.url" value="http://192.168.41.162/jasperserver/"/>
+	<property name="ireport.jasperserver.user" value="caballerof"/>
+	<property name="ireport.jasperserver.reportUnit" value="/Reportes/DETALLE_PLAN_COBERTURA"/>
+	<property name="ireport.jasperserver.report.resource" value="/Reportes/DETALLE_PLAN_COBERTURA_files/main_jrxml"/>
+	<parameter name="P_ID_PLAN_COBERTURA" class="java.lang.Integer"/>
+	<parameter name="P_ID_NOMENCLADOR" class="java.lang.Integer"/>
+	<parameter name="P_ID_GRUPO_SERVICIO" class="java.lang.Integer"/>
+	<parameter name="P_USUARIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT d.ID_DETALLE_PLAN,
+       n.ID_NOMENCLADOR || ' - ' || n.DESCRIPCION AS NOMENCLADOR,
+       gs.DESCRIPCION AS GRUPO_SERVICIO,
+       d.PORC_COBERTURA_1_EVE,
+       d.PORC_COBERTURA_2_EVE,
+       d.PORC_COBERTURA_3_EVE,
+       CASE WHEN COALESCE(d.PORC_COBERTURA_1_EVE,0)
+                 + COALESCE(d.PORC_COBERTURA_2_EVE,0)
+                 + COALESCE(d.PORC_COBERTURA_3_EVE,0) = 0
+            THEN 'SI' ELSE '' END AS SIN_COBERTURA,
+       d.OBSERVACION,
+       c.ID_PLAN_COBERTURA,
+       c.FECHA_REGISTRO,
+       c.ESTADO,
+       c.COMENTARIOS_COBERTURA,
+       c.COMENTARIOS_COBERTURA2,
+       p.CODIGO || ' - ' || p.DESCRIPCION AS PLAN_DESCRIPCION
+FROM DET_PLAN_COBERTURA d
+JOIN CAB_PLAN_COBERTURA c ON c.ID_PLAN_COBERTURA = d.PLA_ID_PLAN_COBERTURA
+JOIN PLAN p ON p.ID_PLAN = c.PLA_ID_PLAN
+JOIN NOMENCLADOR n ON n.ID_NOMENCLADOR = d.NOM_ID_NOMENCLADOR
+LEFT JOIN GRUPO_SERVICIO gs ON gs.ID_GRUPO_SERVICIO = n.GRU_ID_GRUPO_SERVICIO
+WHERE d.PLA_ID_PLAN_COBERTURA = $P{P_ID_PLAN_COBERTURA}
+  AND ($P{P_ID_NOMENCLADOR} IS NULL OR d.NOM_ID_NOMENCLADOR = $P{P_ID_NOMENCLADOR})
+  AND ($P{P_ID_GRUPO_SERVICIO} IS NULL OR n.GRU_ID_GRUPO_SERVICIO = $P{P_ID_GRUPO_SERVICIO})
+ORDER BY gs.DESCRIPCION, n.DESCRIPCION]]>
+	</queryString>
+	<field name="ID_DETALLE_PLAN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_DETALLE_PLAN"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_DETALLE_PLAN"/>
+	</field>
+	<field name="NOMENCLADOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMENCLADOR"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMENCLADOR"/>
+	</field>
+	<field name="GRUPO_SERVICIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="GRUPO_SERVICIO"/>
+		<property name="com.jaspersoft.studio.field.label" value="GRUPO_SERVICIO"/>
+	</field>
+	<field name="PORC_COBERTURA_1_EVE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PORC_COBERTURA_1_EVE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PORC_COBERTURA_1_EVE"/>
+	</field>
+	<field name="PORC_COBERTURA_2_EVE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PORC_COBERTURA_2_EVE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PORC_COBERTURA_2_EVE"/>
+	</field>
+	<field name="PORC_COBERTURA_3_EVE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PORC_COBERTURA_3_EVE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PORC_COBERTURA_3_EVE"/>
+	</field>
+	<field name="SIN_COBERTURA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SIN_COBERTURA"/>
+		<property name="com.jaspersoft.studio.field.label" value="SIN_COBERTURA"/>
+	</field>
+	<field name="OBSERVACION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OBSERVACION"/>
+		<property name="com.jaspersoft.studio.field.label" value="OBSERVACION"/>
+	</field>
+	<field name="ID_PLAN_COBERTURA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_PLAN_COBERTURA"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PLAN_COBERTURA"/>
+	</field>
+	<field name="FECHA_REGISTRO" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_REGISTRO"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_REGISTRO"/>
+	</field>
+	<field name="ESTADO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ESTADO"/>
+		<property name="com.jaspersoft.studio.field.label" value="ESTADO"/>
+	</field>
+	<field name="COMENTARIOS_COBERTURA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="COMENTARIOS_COBERTURA"/>
+		<property name="com.jaspersoft.studio.field.label" value="COMENTARIOS_COBERTURA"/>
+	</field>
+	<field name="COMENTARIOS_COBERTURA2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="COMENTARIOS_COBERTURA2"/>
+		<property name="com.jaspersoft.studio.field.label" value="COMENTARIOS_COBERTURA2"/>
+	</field>
+	<field name="PLAN_DESCRIPCION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PLAN_DESCRIPCION"/>
+		<property name="com.jaspersoft.studio.field.label" value="PLAN_DESCRIPCION"/>
+	</field>
+	<variable name="TOTAL_REGISTROS" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{ID_DETALLE_PLAN}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="103" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="61" uuid="b1000001-0000-0000-0000-000000000001"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="270" y="10" width="260" height="20" uuid="b1000002-0000-0000-0000-000000000002"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE PLAN DE COBERTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="30" width="260" height="20" uuid="b1000003-0000-0000-0000-000000000003"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="dd-MM-yy hh:mm">
+				<reportElement x="700" y="14" width="100" height="13" uuid="b1000006-0000-0000-0000-000000000006"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="27" width="100" height="13" uuid="b1000007-0000-0000-0000-000000000007"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_USUARIO}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="3" y="8" width="120" height="50" uuid="b1000008-0000-0000-0000-000000000008"/>
+				<imageExpression><![CDATA["repo:logo_2024.svg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="660" y="64" width="58" height="15" uuid="b2000005-0000-0000-0000-000000000005"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="720" y="64" width="78" height="15" uuid="b2000006-0000-0000-0000-000000000006"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="65" width="72" height="15" uuid="b2000007-0000-0000-0000-000000000007"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMENTARIOS:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="79" y="65" width="580" height="15" uuid="b2000008-0000-0000-0000-000000000008"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COMENTARIOS_COBERTURA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="102" width="802" height="1" uuid="b2000009-0000-0000-0000-000000000009"/>
+			</line>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="79" y="85" width="719" height="15" uuid="ec135730-10d7-4743-a99d-b31075d89d50"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COMENTARIOS_COBERTURA2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="14" width="361" height="20" backcolor="#4472C4" uuid="b3000001-0000-0000-0000-000000000001"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nomenclador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="361" y="14" width="101" height="20" backcolor="#4472C4" uuid="b3000002-0000-0000-0000-000000000002"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grupo Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="462" y="14" width="58" height="20" backcolor="#4472C4" uuid="b3000003-0000-0000-0000-000000000003"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[%cob.1 evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="520" y="14" width="60" height="20" backcolor="#4472C4" uuid="b3000004-0000-0000-0000-000000000004"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[%cob.2 evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="580" y="14" width="60" height="20" backcolor="#4472C4" uuid="b3000005-0000-0000-0000-000000000005"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[%cob.3 evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="640" y="14" width="60" height="20" backcolor="#4472C4" uuid="b3000006-0000-0000-0000-000000000006"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sin cobertura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="700" y="14" width="102" height="20" backcolor="#4472C4" uuid="b3000007-0000-0000-0000-000000000007"/>
+				<box>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="0" width="72" height="13" uuid="b2000001-0000-0000-0000-000000000001"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLAN:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="77" y="0" width="434" height="13" uuid="b2000002-0000-0000-0000-000000000002"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PLAN_DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="701" y="0" width="100" height="14" uuid="b2000004-0000-0000-0000-000000000004"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA_REGISTRO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="595" y="0" width="100" height="14" uuid="b2000003-0000-0000-0000-000000000003"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA REGISTRO:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="16" backcolor="#F2F2F2" uuid="b4000000-0000-0000-0000-000000000000">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="361" height="16" uuid="b4000001-0000-0000-0000-000000000001"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMENCLADOR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="361" y="0" width="101" height="16" uuid="b4000002-0000-0000-0000-000000000002"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRUPO_SERVICIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,##0.00" isBlankWhenNull="true">
+				<reportElement x="462" y="0" width="58" height="16" uuid="b4000003-0000-0000-0000-000000000003"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PORC_COBERTURA_1_EVE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="520" y="0" width="60" height="16" backcolor="#FF7F50" uuid="b4000004-0000-0000-0000-000000000004">
+					<printWhenExpression><![CDATA[$F{PORC_COBERTURA_2_EVE} == null]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="3">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PORC_COBERTURA_2_EVE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,##0.00" isBlankWhenNull="true">
+				<reportElement x="520" y="0" width="60" height="16" uuid="b4000014-0000-0000-0000-000000000014">
+					<printWhenExpression><![CDATA[$F{PORC_COBERTURA_2_EVE} != null]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="3">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PORC_COBERTURA_2_EVE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="580" y="0" width="60" height="16" backcolor="#FF7F50" uuid="b4000005-0000-0000-0000-000000000005">
+					<printWhenExpression><![CDATA[$F{PORC_COBERTURA_3_EVE} == null]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="3">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PORC_COBERTURA_3_EVE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,##0.00" isBlankWhenNull="true">
+				<reportElement x="580" y="0" width="60" height="16" uuid="b4000015-0000-0000-0000-000000000015">
+					<printWhenExpression><![CDATA[$F{PORC_COBERTURA_3_EVE} != null]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="3">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PORC_COBERTURA_3_EVE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="640" y="0" width="60" height="16" backcolor="#FF7F50" uuid="b4000006-0000-0000-0000-000000000006">
+					<printWhenExpression><![CDATA["SI".equals($F{SIN_COBERTURA})]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SIN_COBERTURA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="640" y="0" width="60" height="16" uuid="b4000016-0000-0000-0000-000000000016">
+					<printWhenExpression><![CDATA[!"SI".equals($F{SIN_COBERTURA})]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SIN_COBERTURA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="700" y="0" width="102" height="16" uuid="b4000007-0000-0000-0000-000000000007"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OBSERVACION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="650" y="2" width="100" height="16" uuid="b5000001-0000-0000-0000-000000000001"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="750" y="2" width="50" height="16" uuid="b5000002-0000-0000-0000-000000000002"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="5" width="300" height="16" uuid="b6000001-0000-0000-0000-000000000001"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total registros: " + $V{TOTAL_REGISTROS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="270" y="10" width="260" height="20" uuid="15b1c6f8-357a-42d3-a4b3-55524dfabfd4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No se encuetran datos.]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
